@@ -3,7 +3,7 @@ import scrape from "website-scraper";
 export const downloadPage = async (url) => {
   const options = {
     urls: [url],
-    directory: "../files",
+    directory: "../files/",
   };
 
   // with async/await

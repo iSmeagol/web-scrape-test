@@ -1,6 +1,6 @@
 import express from "express";
 import configureBrowser, { screenshot, pageContent } from "./pptr.js";
-import { downloadPage } from "./web-scraper.js";
+// import { downloadPage } from "./web-scraper.js";
 
 const router = express.Router();
 
