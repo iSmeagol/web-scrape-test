@@ -109,10 +109,22 @@ export const fetchSelectorAllData = async (
 
     //working
     let dataArray = [];
+    const page_url = await page.url();
     if (resultNeeded === "href") {
       dataArray = await page.$$eval(selectors, (options) => {
         return options.map((o) => {
-          return o.getAttribute("href");
+          let hrefValue = o.getAttribute("href").startsWith("http://")
+            ? o.getAttribute("href")
+            : `http://*****${o.getAttribute("href")}`;
+          return hrefValue;
+        });
+      });
+
+      // console.log("href array from puppeter", dataArray);
+    } else if (resultNeeded === "img") {
+      dataArray = await page.$$eval(selectors, (options) => {
+        return options.map((o) => {
+          return o.getAttribute("src");
         });
       });
 

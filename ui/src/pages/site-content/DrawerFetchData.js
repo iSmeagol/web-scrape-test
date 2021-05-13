@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Button, Drawer, Form, Input, notification, Space } from "antd";
+import {
+  Button,
+  Drawer,
+  Form,
+  Input,
+  notification,
+  Space,
+  Tooltip,
+} from "antd";
+import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import axios from "axios";
 
 const { TextArea } = Input;
@@ -16,6 +25,9 @@ const DrawerFetchData = ({
   setCapturedData,
   selectedElementAttributes,
   selectedElementType,
+  targetElement,
+  setTargetElement,
+  renderDiv,
 }) => {
   const [title, setTitle] = useState("");
   const [titleValidateStatus, setTitleValidateStatus] = useState("warning");
@@ -133,6 +145,7 @@ const DrawerFetchData = ({
           {/* {urlState} */}
           {/* {JSON.stringify(targetClasses)} */}
           {JSON.stringify(selectedElementType)}
+          {/* {JSON.stringify(targetElement)} */}
           <Form.Item hasFeedback validateStatus={titleValidateStatus}>
             <Input
               placeholder="Title"
@@ -146,12 +159,27 @@ const DrawerFetchData = ({
                 }
               }}
             />
-          </Form.Item>
+          </Form.Item>{" "}
+          <Space align="center">
+            <Tooltip title="search">
+              <Button
+                shape="circle"
+                icon={<LeftOutlined />}
+                onClick={() => {
+                  console.log("click");
+                }}
+              />
+            </Tooltip>
+            <Tooltip title="search">
+              <Button shape="circle" icon={<RightOutlined />} />
+            </Tooltip>
+          </Space>
           <TextArea rows={8} value={selectedElementText} readOnly />
           <Space size={8} align="center">
             <Button type="primary" onClick={fetchAllInnerText}>
               Capture Text
             </Button>
+            {/* ! for href */}
             {selectedElementAttributes.href && (
               <Button
                 type="primary"
@@ -178,7 +206,25 @@ const DrawerFetchData = ({
                 Capture Target URL
               </Button>
             )}
-            <Button type="primary">Capture Image</Button>
+            {/* ! for image */}
+            {selectedElementType === "img" && (
+              <Button
+                type="primary"
+                onClick={() => {
+                  let selector = selectedElementType;
+                  if (selectedElementAttributes.class) {
+                    selector = selectedElementAttributes.class
+                      .split(" ")
+                      .map((c) => `.${c}`);
+                    selector = `${selectedElementType}${selector.join("")}`;
+                  }
+                  const resultNeeded = "img";
+                  fetchData(selector, title, resultNeeded);
+                }}
+              >
+                Capture Image
+              </Button>
+            )}
           </Space>
         </Space>
       </Drawer>
