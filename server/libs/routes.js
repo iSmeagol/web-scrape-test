@@ -2,7 +2,9 @@ import express from "express";
 import configureBrowserPage, {
   screenshot,
   pageContent,
-  fetchSelectorData,
+  fetchSelectorSingleData,
+  fetchSelectorAllData,
+  closeBrowser,
 } from "./pptr.js";
 import config from "../config/index.js";
 
@@ -40,7 +42,19 @@ router.get("/fetch", async (req, res) => {
   //   res.send("data from server home route!", await req.params);
 });
 
-router.get("/fetch/selector", async (req, res) => {
+router.get("/fetch/selectors/first", async (req, res) => {
+  try {
+    const { selectors, url } = req.query;
+    const content = await fetchSelectorSingleData(
+      config.browserPage,
+      selectors
+    );
+    // closeBrowser();
+    res.send(content);
+  } catch (error) {}
+});
+
+router.get("/fetch/selectors/all", async (req, res) => {
   try {
     const { selectors, url } = req.query;
     // console.log("selectors", selectors);
@@ -49,7 +63,8 @@ router.get("/fetch/selector", async (req, res) => {
     // });
     //separated by comma for selector  .class1, .class2
     // const content = await fetchSelectorData(page, ".dealPriceText");
-    const content = await fetchSelectorData(config.browserPage, selectors);
+    const content = await fetchSelectorAllData(config.browserPage, selectors);
+    // closeBrowser();
     res.send(content);
   } catch (error) {}
 });

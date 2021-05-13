@@ -36,6 +36,10 @@ const configureBrowserPage = async (setUrl, options = {}) => {
   return page;
 };
 
+export const closeBrowser = async () => {
+  if (browser) await browser.close();
+};
+
 //* screenshot Page
 export const screenshot = async (page, filename) => {
   try {
@@ -83,8 +87,19 @@ export const pageContent = async (page) => {
   }
 };
 
+//* fetch single element
+export const fetchSelectorSingleData = async (page, selectors) => {
+  try {
+    //working
+    const elementText = await page.$eval(selectors, (element) => {
+      return element.innerText;
+    });
+    return elementText;
+  } catch (error) {}
+};
+
 //* fetch by
-export const fetchSelectorData = async (page, selectors) => {
+export const fetchSelectorAllData = async (page, selectors) => {
   try {
     // const contents = await page.$$eval(selector, (data) =>
     //   data.map((d) => {

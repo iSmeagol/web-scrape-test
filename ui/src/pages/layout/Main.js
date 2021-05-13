@@ -1,7 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Layout, Input, Button, Space, Select, Switch } from "antd";
+import {
+  Layout,
+  Input,
+  Button,
+  Space,
+  Select,
+  Switch,
+  BackTop,
+  Divider,
+} from "antd";
 import SiteContent from "pages/site-content/SiteContent";
+import CollapsibleCapturedData from "pages/site-content/CollapsibleCapturedData";
 
 const { Header, Footer, Content } = Layout;
 const { Search } = Input;
@@ -11,10 +21,15 @@ const URL = "http://localhost:5000";
 
 const Main = () => {
   // "https://www.amazon.com/international-sales-offers/b/?ie=UTF8&node=15529609011&ref_=nav_cs_gb_intl_52df97a2eee74206a8343034e85cd058"
-  const [urlState, setUrlState] = useState("https://www.yell.com/");
+  // https://www.yell.com/ucs/UcsSearchAction.do?scrambleSeed=1385622960&keywords=accountants&location=United+Kingdom
+  // https://www.yell.com/ucs/UcsSearchAction.do?scrambleSeed=1817584326&companyName=Accountants&location=LOndon
+  const [urlState, setUrlState] = useState(
+    "https://www.yell.com/ucs/UcsSearchAction.do?scrambleSeed=1817584326&companyName=Accountants&location=LOndon"
+  );
   // const [urlActionState, setUrlActionState] = useState("");
   const [htmlState, setHtmlState] = useState("");
   const [classesState, setClassesState] = useState([]);
+  const [capturedData, setCapturedData] = useState([]);
   const [captureState, setCaptureState] = useState(false);
 
   const onSearch = (value) => {
@@ -75,7 +90,7 @@ const Main = () => {
                 enterButton
               />
               <Space>
-                <Button
+                {/* <Button
                   type="primary"
                   onClick={() => {
                     const params = {
@@ -91,7 +106,7 @@ const Main = () => {
                   Capture Screenshot
                 </Button>
                 <Button onClick={fetchInnerText}>Fetch Inner Text</Button>
-                <Button type="primary">Button</Button>
+                <Button type="primary">Button</Button> */}
                 <Switch
                   checkedChildren="Interact"
                   unCheckedChildren="Interact"
@@ -102,7 +117,7 @@ const Main = () => {
                   }}
                 />
               </Space>
-              <Select
+              {/* <Select
                 mode="tags"
                 style={{ width: "100%" }}
                 placeholder="Classes"
@@ -112,7 +127,8 @@ const Main = () => {
                 {classesState.map((e, i) => (
                   <Option key={e}>{e}</Option>
                 ))}
-              </Select>
+              </Select> */}
+              {/* {JSON.stringify(capturedData)} */}
               <SiteContent
                 content={htmlState}
                 classesState={classesState}
@@ -122,14 +138,31 @@ const Main = () => {
                 onSearch={onSearch}
                 captureState={captureState}
                 setCaptureState={setCaptureState}
+                capturedData={capturedData}
+                setCapturedData={setCapturedData}
               />
             </Space>
           </Content>
           <Footer style={{ textAlign: "center" }}>
             Ant Design ©2018 Created by Ant UED
           </Footer>
+          <Divider />
+          <Content
+            style={{
+              textAlign: "center",
+              position: "sticky",
+              bottom: "0",
+              zIndex: 100,
+            }}
+          >
+            <CollapsibleCapturedData
+              capturedData={capturedData}
+              setCapturedData={setCapturedData}
+            />
+          </Content>
         </Layout>
       </Layout>
+      <BackTop />
     </>
   );
 };

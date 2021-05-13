@@ -1,0 +1,10 @@
+.rendered_container {
+  border: 1px solid gray;
+  overflow: scroll;
+  min-height: 600px;
+  min-width: 400px;
+
+  & > *:hover {
+    border: "1px solid red" !important;
+  }
+}
