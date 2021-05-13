@@ -145,6 +145,7 @@ const DrawerFetchData = ({
           {/* {urlState} */}
           {/* {JSON.stringify(targetClasses)} */}
           {JSON.stringify(selectedElementType)}
+          {JSON.stringify(selectedElementAttributes)}
           {/* {JSON.stringify(targetElement)} */}
           <Form.Item hasFeedback validateStatus={titleValidateStatus}>
             <Input

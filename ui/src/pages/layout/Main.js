@@ -1,16 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import {
-  Layout,
-  Input,
-  Button,
-  Space,
-  Select,
-  Switch,
-  BackTop,
-  Divider,
-  Spin,
-} from "antd";
+import { Layout, Input, Space, Switch, BackTop, Divider, Spin } from "antd";
 import SiteContent from "pages/site-content/SiteContent";
 import CollapsibleCapturedData from "pages/site-content/CollapsibleCapturedData";
 
@@ -91,6 +81,7 @@ const Main = () => {
                     }}
                   />
                 </Space>
+
                 <SiteContent
                   content={htmlState}
                   classesState={classesState}

@@ -1,6 +1,5 @@
 import { Content } from "antd/lib/layout/layout";
-import axios from "axios";
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 // import parse from "html-react-parser";
 import DrawerFetchData from "./DrawerFetchData";
 import "./sitecontent.scss";
@@ -37,20 +36,19 @@ const SiteContent = ({
   };
 
   const contentOnMouseout = (e) => {
-    console.log(showDrawer);
     //? if capture state is true and target is not the container of rendered page and drawer is false
     if (
       captureState &&
       !JSON.stringify(e.target.className).includes("rendered_container")
     )
-      e.target.style.border = "none";
+      if (!showDrawer) e.target.style.border = "none";
 
-    if (
-      captureState &&
-      !JSON.stringify(e.target.className).includes("rendered_container") &&
-      showDrawer
-    )
-      e.target.style.border = "2px dotted #E74D3D";
+    // if (
+    //   captureState &&
+    //   !JSON.stringify(e.target.className).includes("rendered_container") &&
+    //   showDrawer
+    // )
+    //   e.target.style.border = "2px dotted #E74D3D";
   };
 
   const contentOnClick = (e) => {
