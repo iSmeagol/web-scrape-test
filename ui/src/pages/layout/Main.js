@@ -75,6 +75,7 @@ const Main = () => {
                 onChange={(e) => setUrlState(e.target.value)}
                 enterButton
               />
+              {/* {JSON.stringify(capturedData)} */}
               <Space>
                 <Switch
                   checkedChildren="Interact"
@@ -82,7 +83,6 @@ const Main = () => {
                   checked={captureState}
                   onChange={(value) => {
                     setCaptureState(value);
-                    console.log(value);
                   }}
                 />
               </Space>

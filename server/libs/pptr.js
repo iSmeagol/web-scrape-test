@@ -99,68 +99,102 @@ export const fetchSelectorSingleData = async (page, selectors) => {
 };
 
 //* fetch by
-export const fetchSelectorAllData = async (page, selectors) => {
+export const fetchSelectorAllData = async (
+  page,
+  selectors,
+  resultNeeded = ""
+) => {
   try {
-    // const contents = await page.$$eval(selector, (data) =>
-    //   data.map((d) => {
-    //     console.log("d", d.innerHTML);
-    //     d.innerText;
-    //   })
-    // );
-    console.log("start fetching selector data");
-
-    // const first = await page.$eval(selectors, (options) => options.innerText);
-    // console.log("first", first);
-
-    // const checkRes = [];
-    // const checkResHandle = await page.$$(selectors);
-    // for (const content of checkResHandle) {
-    //   // const name = await content.$("div.appname");
-    //   // const gameName = await page.evaluate((name) => name.innerText, name);
-    //   // console.log("Game Name: ", gameName);
-    //   console.log("content", content);
-    // }
-    // console.log("checkRes", checkRes);
-
-    // const bodyHandle = await page.$("body");
-    // const html = await page.evaluate((body) => body.innerHTML, bodyHandle);
-    // await bodyHandle.dispose();
-    // return html;
+    console.log("start fetching selector data with", selectors);
 
     //working
-    const firstArray = await page.$$eval(selectors, (options) => {
-      return options.map((o) => {
-        return o.innerText;
-        // return o.textContent;
+    let dataArray = [];
+    if (resultNeeded === "href") {
+      dataArray = await page.$$eval(selectors, (options) => {
+        return options.map((o) => {
+          return o.getAttribute("href");
+        });
       });
-    });
-    // console.log("firstArray", firstArray);
 
-    // const result = [];
-    // const contents = await page.$$eval(selectors, (options) => {
-    //   options.map((option) => {
-    //     result.push(option.innerHTML);
-    //     return option.innerText;
-    //   });
-    //   console.log("result2", result);
-    // });
-    // console.log("Contents2", contents);
-
-    // const contents3 = await page.evaluate(() => {
-    //   const objs = document.querySelectorAll(selectors);
-    //   const result = [];
-    //   objs.forEach((element) => {
-    //     // element.click(); //wait to open to navigate
-    //     console.log(element.innerText);
-    //     result.push(element);
-    //   });
-    //   console.log("result", result);
-    //   console.log("result 3", result);
-    //   return result;
-    // });
-    // console.log("Content 3s", contents3);
-    // return result;
-    return firstArray;
-  } catch (error) {}
+      // console.log("href array from puppeter", dataArray);
+    } else {
+      dataArray = await page.$$eval(selectors, (options) => {
+        return options.map((o) => {
+          return o.innerText;
+          // return o.innerText;
+          // return o.textContent;
+        });
+        // console.log("array from puppeter", dataArray);
+      });
+    }
+    return dataArray;
+  } catch (error) {
+    console.log(error);
+  }
 };
+// //* fetch by
+// export const fetchSelectorAllData = async (page, selectors) => {
+//   try {
+//     // const contents = await page.$$eval(selector, (data) =>
+//     //   data.map((d) => {
+//     //     console.log("d", d.innerHTML);
+//     //     d.innerText;
+//     //   })
+//     // );
+//     console.log("start fetching selector data");
+
+//     // const first = await page.$eval(selectors, (options) => options.innerText);
+//     // console.log("first", first);
+
+//     // const checkRes = [];
+//     // const checkResHandle = await page.$$(selectors);
+//     // for (const content of checkResHandle) {
+//     //   // const name = await content.$("div.appname");
+//     //   // const gameName = await page.evaluate((name) => name.innerText, name);
+//     //   // console.log("Game Name: ", gameName);
+//     //   console.log("content", content);
+//     // }
+//     // console.log("checkRes", checkRes);
+
+//     // const bodyHandle = await page.$("body");
+//     // const html = await page.evaluate((body) => body.innerHTML, bodyHandle);
+//     // await bodyHandle.dispose();
+//     // return html;
+
+//     //working
+//     const firstArray = await page.$$eval(selectors, (options) => {
+//       return options.map((o) => {
+//         return o.innerText;
+//         // return o.textContent;
+//       });
+//     });
+//     // console.log("firstArray", firstArray);
+
+//     // const result = [];
+//     // const contents = await page.$$eval(selectors, (options) => {
+//     //   options.map((option) => {
+//     //     result.push(option.innerHTML);
+//     //     return option.innerText;
+//     //   });
+//     //   console.log("result2", result);
+//     // });
+//     // console.log("Contents2", contents);
+
+//     // const contents3 = await page.evaluate(() => {
+//     //   const objs = document.querySelectorAll(selectors);
+//     //   const result = [];
+//     //   objs.forEach((element) => {
+//     //     // element.click(); //wait to open to navigate
+//     //     console.log(element.innerText);
+//     //     result.push(element);
+//     //   });
+//     //   console.log("result", result);
+//     //   console.log("result 3", result);
+//     //   return result;
+//     // });
+//     // console.log("Content 3s", contents3);
+//     // return result;
+//     return firstArray;
+//   } catch (error) {}
+// };
 export default configureBrowserPage;

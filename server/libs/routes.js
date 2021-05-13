@@ -56,17 +56,24 @@ router.get("/fetch/selectors/first", async (req, res) => {
 
 router.get("/fetch/selectors/all", async (req, res) => {
   try {
-    const { selectors, url } = req.query;
-    // console.log("selectors", selectors);
-    // const page = await configureBrowser(url, {
-    //   waitUntil: "networkidle0",
-    // });
-    //separated by comma for selector  .class1, .class2
-    // const content = await fetchSelectorData(page, ".dealPriceText");
-    const content = await fetchSelectorAllData(config.browserPage, selectors);
+    const { selectors, url, resultNeeded } = req.query;
+    const content = await fetchSelectorAllData(
+      config.browserPage,
+      selectors,
+      resultNeeded
+    );
     // closeBrowser();
     res.send(content);
   } catch (error) {}
 });
+
+// router.get("/fetch/selectors/all", async (req, res) => {
+//   try {
+//     const { selectors, url } = req.query;
+//     const content = await fetchSelectorAllData(config.browserPage, selectors);
+//     // closeBrowser();
+//     res.send(content);
+//   } catch (error) {}
+// });
 
 export default router;

@@ -20,6 +20,10 @@ const SiteContent = ({
   const [showDrawer, setShowDrawer] = useState(false);
   const [targetClasses, setTargetClasses] = useState([]);
   const [selectedElementText, setSelectedElementText] = useState("");
+  const [selectedElementAttributes, setSelectedElementAttributes] = useState(
+    []
+  );
+  const [selectedElementType, setSelectedElementType] = useState([]);
 
   return (
     <>
@@ -32,15 +36,30 @@ const SiteContent = ({
         onClick={(e) => {
           e.preventDefault();
 
-          console.log("target", e.target.tagName);
-          console.log("nodeName", e.target.nodeName);
-          console.log("nodeName", e.target.href);
-          console.log("node attributes", e.target.attributes);
+          // console.log("target", e.target);
+
+          // console.log("target", e.target.tagName);
+          // console.log("nodeName", e.target.nodeName);
+          // console.log("nodeName", e.target.href);
+          // console.log("node attributes", e.target.attributes);
+
+          //! set selected element
+          setSelectedElementType(e.target.nodeName.toLowerCase());
+
+          // ! get attributes of an element target
+          const attributeNodeArray = [...e.target.attributes];
+          const attrs = attributeNodeArray.reduce((attrs, attribute) => {
+            attrs[attribute.name] = attribute.value;
+            return attrs;
+          }, {});
+          // console.log("attributes",attrs);
+          setSelectedElementAttributes(attrs); //? set element attribute to pass on drawer
+          // ! get attributes of an element target
 
           const classes = e.target.className.split(" "); //convert to array
+          // console.log(classes);
+          // console.log(e.target);
 
-          console.log(classes);
-          console.log(e.target);
           setTargetClasses(classes);
 
           if (captureState) {
@@ -49,24 +68,16 @@ const SiteContent = ({
             setShowDrawer(true);
           }
           //check if there is a form action
-          const formTarget = e.target.form;
-
-          // console.log(e.target.getAttribute("type"));
-
-          if (formTarget) {
-            if (e.target.getAttribute("type") === "submit") {
-              // console.log("submit");
-              console.log("event form", e.target.form.getAttribute("action"));
-              // e.target.form.children.forEach((element) => {
-              //   console.log("element", element);
-              // });
-              console.log(e.target.form.elements);
-              // const actionString = e.target.form.getAttribute("action");
-              // const url = `${urlState}${actionString}`.replace("//", "/");
-              // setUrlState(url);
-              // onSearch();
-            }
-          }
+          // const formTarget = e.target.form;
+          // if (formTarget) {
+          //   if (e.target.getAttribute("type") === "submit") {
+          //     console.log("event form", e.target.form.getAttribute("action"));
+          //     // e.target.form.children.forEach((element) => {
+          //     //   console.log("element", element);
+          //     // });
+          //     // console.log(e.target.form.elements);
+          //   }
+          // }
 
           // setClassesState(classes);
         }}
@@ -83,6 +94,8 @@ const SiteContent = ({
         selectedElementText={selectedElementText}
         capturedData={capturedData}
         setCapturedData={setCapturedData}
+        selectedElementAttributes={selectedElementAttributes}
+        selectedElementType={selectedElementType}
       />
     </>
   );
