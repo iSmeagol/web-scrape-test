@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Drawer, Form, Input, notification, Space } from "antd";
 import axios from "axios";
 
@@ -15,11 +15,6 @@ const DrawerFetchData = ({
   capturedData,
   setCapturedData,
 }) => {
-  //   useEffect(() => {
-  //     fetchInnerText(urlState, targetClasses);
-  //   }, [targetClasses, urlState]);
-
-  //   const [captureDataState, setCaptureDataState] = useState("");
   const [title, setTitle] = useState("");
   const [titleValidateStatus, setTitleValidateStatus] = useState("warning");
 
@@ -53,14 +48,21 @@ const DrawerFetchData = ({
         capturedData.filter((o) => o.data === dataObj.data)
       );
 
-      if (!dataExist) setCapturedData((prev) => [...prev, dataObj]);
-      else {
+      if (!dataExist) {
+        setCapturedData((prev) => [...prev, dataObj]);
+        notification["success"]({
+          message: "Success!",
+          description: "Captured data has been added.",
+        });
+      } else {
         notification["error"]({
           message: "Error!",
-          description: "The data selected has been added already.",
+          description: "Captured data has been added already.",
         });
         console.log("data exist");
       }
+      setShowDrawer(false);
+      setTitle("");
     });
   };
 
@@ -79,7 +81,7 @@ const DrawerFetchData = ({
           direction="vertical"
         >
           {/* {urlState} */}
-          {JSON.stringify(targetClasses)}
+          {/* {JSON.stringify(targetClasses)} */}
           <Form.Item hasFeedback validateStatus={titleValidateStatus}>
             <Input
               placeholder="Title"

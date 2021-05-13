@@ -33,47 +33,33 @@ const Main = () => {
   const [captureState, setCaptureState] = useState(false);
 
   const onSearch = (value) => {
-    // console.log(value);
-    //disable first
-    // setClassesState([]);
-    // setUrlState(value);
-
     let url = value;
-    // if (urlActionState !== "") url = `${value}${urlActionState}`;
     const params = {
       url: url,
     };
     axios.get(`${URL}/fetch`, { params: params }).then((res) => {
-      // console.log(res.data);
-      // console.log(res.data);
       setHtmlState(res.data);
       // document.getElementById("html__content").innerHTML = res.data;
     });
   };
 
-  const fetchInnerText = () => {
-    if (classesState.length === 0) return true;
-    const classes = classesState.map((c) => `.${c}`);
-    // console.log(classes.join(","));
-    const params = {
-      url: urlState,
-      selectors: classes.join(", "),
-    };
-    axios.get(`${URL}/fetch/selector`, { params: params }).then((res) => {
-      console.log(res.data);
-    });
-  };
+  // const fetchInnerText = () => {
+  //   if (classesState.length === 0) return true;
+  //   const classes = classesState.map((c) => `.${c}`);
+  //   // console.log(classes.join(","));
+  //   const params = {
+  //     url: urlState,
+  //     selectors: classes.join(", "),
+  //   };
+  //   axios.get(`${URL}/fetch/selector`, { params: params }).then((res) => {
+  //     console.log(res.data);
+  //   });
+  // };
 
-  const handleChange = (value) => {
-    // console.log(`selected ${value}`);
-    setClassesState(value);
-  };
-
-  // for (let i = 10; i < 36; i++) {
-  //   classesState.push(
-  //     <Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>
-  //   );
-  // }
+  // const handleChange = (value) => {
+  //   // console.log(`selected ${value}`);
+  //   setClassesState(value);
+  // };
 
   return (
     <>
@@ -90,23 +76,6 @@ const Main = () => {
                 enterButton
               />
               <Space>
-                {/* <Button
-                  type="primary"
-                  onClick={() => {
-                    const params = {
-                      url: urlState,
-                    };
-                    axios
-                      .get(`${URL}/screenshot`, { params: params })
-                      .then((res) => {
-                        console.log(res.data);
-                      });
-                  }}
-                >
-                  Capture Screenshot
-                </Button>
-                <Button onClick={fetchInnerText}>Fetch Inner Text</Button>
-                <Button type="primary">Button</Button> */}
                 <Switch
                   checkedChildren="Interact"
                   unCheckedChildren="Interact"
@@ -117,18 +86,6 @@ const Main = () => {
                   }}
                 />
               </Space>
-              {/* <Select
-                mode="tags"
-                style={{ width: "100%" }}
-                placeholder="Classes"
-                value={classesState}
-                onChange={handleChange}
-              >
-                {classesState.map((e, i) => (
-                  <Option key={e}>{e}</Option>
-                ))}
-              </Select> */}
-              {/* {JSON.stringify(capturedData)} */}
               <SiteContent
                 content={htmlState}
                 classesState={classesState}

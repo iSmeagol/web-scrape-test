@@ -21,46 +21,13 @@ const SiteContent = ({
   const [targetClasses, setTargetClasses] = useState([]);
   const [selectedElementText, setSelectedElementText] = useState("");
 
-  // const fetchInnerText = (url, classes) => {
-  //   const params = {
-  //     url: url,
-  //     selectors: classes,
-  //   };
-  //   console.log(params);
-  //   return;
-  //   axios.get(`${URL}/fetch/selector`, { params: params }).then((res) => {
-  //     console.log(res.data);
-  //   });
-  // };
-
   return (
     <>
       <Content
         className="rendered_container"
         id="html__content"
-        // style={{
-        //   border: "1px solid red",
-        //   minHeight: "300px",
-        //   maxHeight: "700px",
-        //   overflow: "scroll",
-        // }}
         onMouseOver={(e) => {
-          // console.log("className", e.target.className);
-          // console.log("className", e.target.className);
-          // // const regex = new RegExp("class=(.*?)", "g");
-          // // const regex = new RegExp(/([^=,]*)=("[^"]*"|[^,"]*)/);
-          // // const regex = /([^class=,]*)=("[^"]*"|[^,"]*)/g;
-          // // const regex = new RegExp('class="(.*?)"', "g");
-          // const regex = ' ([class=^"]*)="([^"]*)"';
-          // const target = e.target.outerHTML;
-          // // console.log("match", target.match(regex));
-          // console.log(
-          //   "match",
-          //   Array.from(target.matchAll(regex), (m) => m[0])
-          // );
-          // // const res = target.matchAll(regex);
-          // // const test = Array.from(target.matchAll(regex), (m) => m[0]);
-          // // });
+          // console.log(e.target);
         }}
         onClick={(e) => {
           e.preventDefault();
